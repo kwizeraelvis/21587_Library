@@ -5,12 +5,16 @@
  */
 package com.elvis.swingapp.librarysystem.view;
 
+import com.elvis.swingapp.librarysystem.DAO.ClientDAO;
+import com.elvis.swingapp.librarysystem.model.Client;
+
 /**
  *
  * @author elvis
  */
 public class ClientView extends javax.swing.JInternalFrame {
 
+    ClientDAO clientDAO = new ClientDAO();
     /**
      * Creates new form ClientView
      */
@@ -40,7 +44,7 @@ public class ClientView extends javax.swing.JInternalFrame {
         txt_phone = new javax.swing.JTextField();
         txt_email = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        c0_category = new javax.swing.JComboBox<>();
+        co_category = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         lbl_upload = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -66,7 +70,7 @@ public class ClientView extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Category");
 
-        c0_category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Staff", "External" }));
+        co_category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Staff", "External" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -88,7 +92,7 @@ public class ClientView extends javax.swing.JInternalFrame {
                     .addComponent(txt_lastname)
                     .addComponent(txt_phone)
                     .addComponent(txt_email)
-                    .addComponent(c0_category, 0, 254, Short.MAX_VALUE))
+                    .addComponent(co_category, 0, 254, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -117,7 +121,7 @@ public class ClientView extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(c0_category, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(co_category, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -143,6 +147,11 @@ public class ClientView extends javax.swing.JInternalFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jButton1.setText("Save");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Upload Image");
 
@@ -248,9 +257,21 @@ public class ClientView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Client client = new Client();
+        client.setRegno(txt_regno.getText());
+        client.setFirstName(txt_firstname.getText());
+        client.setLastName(txt_lastname.getText());
+        client.setPhoneNumber(txt_phone.getText());
+        client.setEmail(txt_email.getText());
+        client.setCategory(co_category.getSelectedItem().toString());
+        clientDAO.save(client);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> c0_category;
+    private javax.swing.JComboBox<String> co_category;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

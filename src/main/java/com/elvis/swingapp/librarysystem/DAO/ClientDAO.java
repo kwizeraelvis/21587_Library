@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 /**
  *
  * @author elvis
@@ -41,7 +42,21 @@ public class ClientDAO extends Connector implements DAO<Client> {
     
     @Override
     public void save(Client object) {
-        
+        connect();
+        try{
+            pst = con.prepareStatement("insert into client values(?,?,?,?,?,?)");
+            pst.setString(1, object.getRegno());
+            pst.setString(2, object.getFirstName());
+            pst.setString(3, object.getLastName());
+            pst.setString(4, object.getPhoneNumber());
+            pst.setString(5, object.getEmail());
+            pst.setString(6, object.getCategory());
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }finally{
+            disConnect();
+        }
     }
 
     @Override
