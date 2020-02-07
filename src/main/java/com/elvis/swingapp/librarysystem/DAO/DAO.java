@@ -5,11 +5,13 @@
  */
 package com.elvis.swingapp.librarysystem.DAO;
 
+import java.sql.ResultSet;
+
 /**
  *
  * @author elvis
  */
 public interface DAO<T> {
     void save(T object);
-    void display();
+    ResultSet display();
 }

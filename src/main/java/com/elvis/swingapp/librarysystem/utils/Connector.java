@@ -8,6 +8,7 @@ package com.elvis.swingapp.librarysystem.utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -24,6 +25,7 @@ public class Connector {
     protected Connection con;
     protected Statement st;
     protected PreparedStatement pst;
+    protected ResultSet rs;
     
     
     public void connect(){
@@ -43,6 +45,9 @@ public class Connector {
             }
             if(pst != null){
                 pst.close();
+            }
+            if(rs != null){
+                rs.close();
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

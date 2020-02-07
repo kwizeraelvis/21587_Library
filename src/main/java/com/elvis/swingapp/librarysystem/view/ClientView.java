@@ -7,7 +7,7 @@ package com.elvis.swingapp.librarysystem.view;
 
 import com.elvis.swingapp.librarysystem.DAO.ClientDAO;
 import com.elvis.swingapp.librarysystem.model.Client;
-
+import net.proteanit.sql.DbUtils;
 /**
  *
  * @author elvis
@@ -20,6 +20,7 @@ public class ClientView extends javax.swing.JInternalFrame {
      */
     public ClientView() {
         initComponents();
+        RenderTable();
     }
 
     /**
@@ -52,7 +53,7 @@ public class ClientView extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tb_info = new javax.swing.JTable();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Entry"));
 
@@ -203,7 +204,7 @@ public class ClientView extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Display"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tb_info.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -214,7 +215,7 @@ public class ClientView extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tb_info);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -257,6 +258,12 @@ public class ClientView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    public void RenderTable(){
+        tb_info.setModel(DbUtils.resultSetToTableModel(clientDAO.display()));
+    }
+    
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Client client = new Client();
@@ -267,6 +274,7 @@ public class ClientView extends javax.swing.JInternalFrame {
         client.setEmail(txt_email.getText());
         client.setCategory(co_category.getSelectedItem().toString());
         clientDAO.save(client);
+        RenderTable();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
@@ -286,8 +294,8 @@ public class ClientView extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbl_upload;
+    private javax.swing.JTable tb_info;
     private javax.swing.JTextField txt_email;
     private javax.swing.JTextField txt_firstname;
     private javax.swing.JTextField txt_lastname;

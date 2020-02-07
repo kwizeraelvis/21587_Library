@@ -7,9 +7,8 @@ package com.elvis.swingapp.librarysystem.DAO;
 
 import com.elvis.swingapp.librarysystem.model.Client;
 import com.elvis.swingapp.librarysystem.utils.Connector;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -60,8 +59,14 @@ public class ClientDAO extends Connector implements DAO<Client> {
     }
 
     @Override
-    public void display() {
-        
+    public ResultSet display() {
+        connect();
+        try{
+            st = con.createStatement();
+            rs = st.executeQuery("select * from client;");
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return rs;
     }
-    
 }
