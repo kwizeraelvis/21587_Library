@@ -10,6 +10,7 @@ import com.elvis.swingapp.librarysystem.DAO.BookDAO;
 import com.elvis.swingapp.librarysystem.model.Book;
 import com.elvis.swingapp.librarysystem.model.BookCategory;
 import java.sql.Date;
+import java.sql.ResultSet;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -26,6 +27,7 @@ public class BookView extends javax.swing.JInternalFrame {
         initComponents();
         RenderBookTable();
         RenderBookCategoryTable();
+        PopulateCategoryOptions();
     }
 
     /**
@@ -210,8 +212,6 @@ public class BookView extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Book Category");
 
-        co_category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -391,6 +391,17 @@ public class BookView extends javax.swing.JInternalFrame {
     private void RenderBookCategoryTable(){
         jTable2.setModel(DbUtils.resultSetToTableModel(bookCategoryDAO.display()));
     }
+    private void PopulateCategoryOptions(){
+        co_category.removeAllItems();
+        try {
+            ResultSet options = bookCategoryDAO.display();
+            while(options.next()){
+                co_category.addItem(options.getString("categoryName"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Book book = new Book();
@@ -410,6 +421,7 @@ public class BookView extends javax.swing.JInternalFrame {
         bookCategory.setCategoryName(txt_categoryName.getText());
         bookCategoryDAO.save(bookCategory);
         RenderBookCategoryTable();
+        PopulateCategoryOptions();
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

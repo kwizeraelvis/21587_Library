@@ -24,6 +24,7 @@ public class BookCategoryDAO extends Connector implements DAO<BookCategory>{
                     + "categoryID varchar(6) primary key,"
                     + "categoryName varchar(50)"
                     + ");";
+            st.executeUpdate(query);
         } catch (Exception e) {
             e.printStackTrace();
         }finally{
