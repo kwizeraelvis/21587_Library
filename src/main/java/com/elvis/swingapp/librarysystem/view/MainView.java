@@ -95,7 +95,10 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add Required Implementiation for the book sub menu
+        BookView bookView = new BookView();
+        bookView.setSize(container.getWidth(), container.getHeight());
+        container.add(bookView);
+        bookView.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
