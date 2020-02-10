@@ -7,6 +7,15 @@ package com.elvis.swingapp.librarysystem.view;
 
 import com.elvis.swingapp.librarysystem.DAO.ClientDAO;
 import com.elvis.swingapp.librarysystem.model.Client;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import net.proteanit.sql.DbUtils;
 /**
  *
@@ -283,7 +292,19 @@ public class ClientView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add Image Upload Functionality.        
+       JFileChooser fileChooser = new JFileChooser();
+       int userAction = fileChooser.showOpenDialog(this);
+       if(userAction == JFileChooser.APPROVE_OPTION){
+           File file = fileChooser.getSelectedFile();
+           try {
+               BufferedImage img = ImageIO.read(file);
+               Image selectedImage = img.getScaledInstance(lbl_upload.getWidth(), lbl_upload.getHeight(), Image.SCALE_SMOOTH);
+               ImageIcon icon = new ImageIcon(selectedImage);
+               lbl_upload.setIcon(icon);
+           } catch (IOException ex) {
+               ex.printStackTrace();
+           }
+       }
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
