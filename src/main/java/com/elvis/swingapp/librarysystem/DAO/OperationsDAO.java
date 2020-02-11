@@ -7,8 +7,13 @@ package com.elvis.swingapp.librarysystem.DAO;
 
 import com.elvis.swingapp.librarysystem.model.CheckIn;
 import com.elvis.swingapp.librarysystem.model.CheckOut;
+import com.elvis.swingapp.librarysystem.model.Status;
+import com.elvis.swingapp.librarysystem.utils.BookCheckoutUnsupportedAction;
 import com.elvis.swingapp.librarysystem.utils.Connector;
+import java.sql.Date;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,12 +44,32 @@ public class OperationsDAO extends Connector implements UserRepository<CheckIn, 
     
     @Override
     public void CheckIn(CheckIn object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
 
     @Override
     public void Checkout(CheckOut object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        connect();
+        if(object.getStatus() != Status.CHECK_IN.toString()){
+            try {
+                throw new BookCheckoutUnsupportedAction("The book has alrady been taken;");
+            } catch (BookCheckoutUnsupportedAction ex) {
+                ex.printStackTrace();
+            }
+        }else{
+            try {
+                pst = con.prepareStatement("insrert into operation values(?,?,?,?)");
+                pst.setString(1, object.getClient().getRegno());
+                pst.setString(2, object.getBook().getBookId());
+                pst.setDate(3, Date.valueOf(object.getDateTime()));
+                pst.setString(4, object.getStatus());
+                pst.executeUpdate();                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally{
+                disConnect();
+            }
+        }
     }
 
     @Override
