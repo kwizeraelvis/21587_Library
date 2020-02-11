@@ -13,8 +13,6 @@ import com.elvis.swingapp.librarysystem.utils.BookCheckoutUnsupportedAction;
 import com.elvis.swingapp.librarysystem.utils.Connector;
 import java.sql.Date;
 import java.sql.ResultSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

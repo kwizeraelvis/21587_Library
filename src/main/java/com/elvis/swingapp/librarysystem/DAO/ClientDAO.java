@@ -7,6 +7,7 @@ package com.elvis.swingapp.librarysystem.DAO;
 
 import com.elvis.swingapp.librarysystem.model.Client;
 import com.elvis.swingapp.librarysystem.utils.Connector;
+import com.elvis.swingapp.librarysystem.utils.GeneralUtility;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -15,7 +16,7 @@ import java.sql.SQLException;
  *
  * @author elvis
  */
-public class ClientDAO extends Connector implements DAO<Client> {
+public class ClientDAO extends Connector implements DAO<Client>,Repository<String, Client> {
 
     public ClientDAO() {
         connect();
@@ -68,5 +69,50 @@ public class ClientDAO extends Connector implements DAO<Client> {
             ex.printStackTrace();
         }
         return rs;
+    }
+
+    @Override
+    public String findCategoryByName(String categoryName) {
+       connect();
+       String[] names = GeneralUtility.StringSplit(categoryName);
+       String clientId = "";
+        try {
+            pst = con.prepareStatement("select regno from client wheere firstname = ? and lastname = ?");
+            pst.setString(1, names[0]);
+            pst.setString(2, names[1]);
+            rs = pst.executeQuery();
+            if(rs.next()){
+                clientId = rs.getString("regno");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            disConnect();
+        }
+        return clientId;
+    }
+
+    @Override
+    public Client findCategoryById(String categoryId) {
+        connect();
+        Client client = new Client();
+        try {
+            pst = con.prepareStatement("select * from client where regno = ?");
+            pst.setString(1, categoryId);
+            rs = pst.executeQuery();
+            if(rs.next()){
+                client.setRegno(categoryId);
+                client.setFirstName(rs.getString("firstname"));
+                client.setLastName(rs.getString("lastname"));
+                client.setEmail(rs.getString("email"));
+                client.setPhoneNumber(rs.getString("phonenumber"));
+                client.setCategory(rs.getString("category"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            disConnect();
+        }
+        return client;
     }
 }

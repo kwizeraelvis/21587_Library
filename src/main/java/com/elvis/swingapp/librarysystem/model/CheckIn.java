@@ -14,8 +14,6 @@ import java.time.LocalDate;
 public class CheckIn {
     private Client client;
     private Book book;
-
-    
     private LocalDate dateTime;
     private String status;
 
