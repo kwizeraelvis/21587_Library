@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.elvis.swingapp.librarysystem.DAO;
+package com.elvis.swingapp.librarysystem.model;
 
 /**
  *
  * @author elvis
  */
-public interface Repository<T, E> {
-   T findCategoryByName(T categoryName);
-   E findCategoryById(T categoryId);
+public enum Status {
+    CHECK_IN, CHECK_OUT
 }

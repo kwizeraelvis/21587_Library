@@ -5,11 +5,14 @@
  */
 package com.elvis.swingapp.librarysystem.DAO;
 
+import java.sql.ResultSet;
+
 /**
  *
  * @author elvis
  */
-public interface Repository<T, E> {
-   T findCategoryByName(T categoryName);
-   E findCategoryById(T categoryId);
+public interface UserRepository<T,E> {
+    void CheckIn(T object);
+    void Checkout(E object);
+    ResultSet display();
 }
