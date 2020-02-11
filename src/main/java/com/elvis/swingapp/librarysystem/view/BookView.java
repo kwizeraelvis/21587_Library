@@ -411,6 +411,7 @@ public class BookView extends javax.swing.JInternalFrame {
         book.setDateofPublication(new Date(txt_date.getDate().getTime()));
         book.setAuthor(txt_author.getText());
         book.setPages(Integer.valueOf(cu_pages.getValue().toString()));
+        book.setCategory(bookCategoryDAO.findCategoryById(bookCategoryDAO.findCategoryByName(co_category.getSelectedItem().toString())));
         bookDAO.save(book);
         RenderBookTable();
     }//GEN-LAST:event_jButton1ActionPerformed

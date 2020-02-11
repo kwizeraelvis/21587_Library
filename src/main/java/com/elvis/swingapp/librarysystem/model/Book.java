@@ -18,6 +18,15 @@ public class Book {
     private Date dateofPublication;
     private String author;
     private int pages;
+    private BookCategory category;
+
+    public BookCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(BookCategory category) {
+        this.category = category;
+    }
 
     public String getBookId() {
         return bookId;

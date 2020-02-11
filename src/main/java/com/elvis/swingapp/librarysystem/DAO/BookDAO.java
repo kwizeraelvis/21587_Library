@@ -26,7 +26,9 @@ public class BookDAO extends Connector implements DAO<Book>{
                     + "publishingHouse varchar(50),"
                     + "dateofPublication date,"
                     + "author varchar(50),"
-                    + "pages int"
+                    + "pages int,"
+                    + "categoryId varchar(6),"
+                    + "FOREIGN KEY (categoryId) REFERENCES category(categoryID) ON DELETE CASCADE ON UPDATE CASCADE"
                     + ");";
             st.executeUpdate(query);
         } catch (Exception e) {
@@ -40,13 +42,14 @@ public class BookDAO extends Connector implements DAO<Book>{
     public void save(Book object) {
          connect();
          try {
-            pst = con.prepareStatement("insert into book values(?,?,?,?,?,?);");
+            pst = con.prepareStatement("insert into book values(?,?,?,?,?,?,?);");
             pst.setString(1, object.getBookId());
             pst.setString(2, object.getTitle());
             pst.setString(3, object.getPublishingHouse());
             pst.setDate(4, object.getDateofPublication());
             pst.setString(5, object.getAuthor());
             pst.setInt(6, object.getPages());
+            pst.setString(7, object.getCategory().getCategoryId());
             pst.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

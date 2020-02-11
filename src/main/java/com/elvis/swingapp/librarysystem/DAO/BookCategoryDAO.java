@@ -13,7 +13,7 @@ import java.sql.ResultSet;
  *
  * @author elvis
  */
-public class BookCategoryDAO extends Connector implements DAO<BookCategory>{
+public class BookCategoryDAO extends Connector implements DAO<BookCategory>,Repository<String, BookCategory>{
 
     public BookCategoryDAO() {
         connect();
@@ -57,6 +57,45 @@ public class BookCategoryDAO extends Connector implements DAO<BookCategory>{
             e.printStackTrace();
         }
         return rs;
+    }
+
+    @Override
+    public String findCategoryByName(String categoryName) {
+        connect();
+        String categoryId = "";
+        try {
+            pst = con.prepareStatement("select categoryID from category where categoryName = ?");
+            pst.setString(1, categoryName);
+            rs = pst.executeQuery();
+            if(rs.next()){
+                categoryId = rs.getString("categoryID");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            disConnect();
+        }
+        return categoryId;
+    }
+
+    @Override
+    public BookCategory findCategoryById(String categoryId) {
+        connect();
+        BookCategory category = new BookCategory();
+        try {
+            pst = con.prepareStatement("select * from category where categoryID = ?");
+            pst.setString(1, categoryId);
+            rs = pst.executeQuery();
+            if(rs.next()){
+                category.setCategoryId(rs.getString("categoryID"));
+                category.setCategoryName(rs.getString("categoryName"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            disConnect();
+        }
+        return category;
     }
     
 }
