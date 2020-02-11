@@ -93,7 +93,14 @@ public class OperationsDAO extends Connector implements UserRepository<CheckIn, 
 
     @Override
     public ResultSet display() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        connect();
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery("select * from operation;");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
     }
 
 }
