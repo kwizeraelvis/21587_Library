@@ -13,7 +13,8 @@ import java.sql.ResultSet;
  *
  * @author elvis
  */
-public class BookDAO extends Connector implements DAO<Book>{
+public class BookDAO extends Connector implements DAO<Book>,Repository<String, Book>{
+    BookCategoryDAO bookCategoryDAO = new BookCategoryDAO();
 
     public BookDAO() {
         connect();
@@ -68,6 +69,50 @@ public class BookDAO extends Connector implements DAO<Book>{
             e.printStackTrace();
         }
         return rs;
+    }
+
+    @Override
+    public String findCategoryByName(String categoryName) {
+        connect();
+        String bookId = "";
+        try {
+            pst = con.prepareStatement("select bookId from book where title = ?;");
+            pst.setString(1, categoryName);
+            rs = pst.executeQuery();
+            if(rs.next()){
+                bookId = rs.getString("bookId");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            disConnect();
+        }
+        return bookId;
+    }
+
+    @Override
+    public Book findCategoryById(String categoryId) {
+        connect();
+        Book book = new Book();
+        try {
+            pst = con.prepareStatement("select * from book where bookId = ?");
+            pst.setString(1, categoryId);
+            rs = pst.executeQuery();
+            if(rs.next()){
+                book.setBookId(categoryId);
+                book.setTitle(rs.getString("title"));
+                book.setAuthor(rs.getString("author"));
+                book.setPublishingHouse(rs.getString("publishingHouse"));
+                book.setDateofPublication(rs.getDate("dateofPublication"));
+                book.setPages(rs.getInt("pages"));
+                book.setCategory(bookCategoryDAO.findCategoryById(rs.getString("categoryId")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            disConnect();
+        }
+        return book;
     }
     
 }
