@@ -8,7 +8,12 @@ package com.elvis.swingapp.librarysystem.view;
 import com.elvis.swingapp.librarysystem.DAO.BookDAO;
 import com.elvis.swingapp.librarysystem.DAO.ClientDAO;
 import com.elvis.swingapp.librarysystem.DAO.OperationsDAO;
+import com.elvis.swingapp.librarysystem.model.CheckOut;
+import com.elvis.swingapp.librarysystem.model.Status;
 import java.sql.ResultSet;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 /**
  *
@@ -233,7 +238,15 @@ public class OperationView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_co_clientnameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        CheckOut checkOut = new CheckOut();
+        checkOut.setClient(clientDAO.findCategoryById(clientDAO.findCategoryByName(co_clientname.getSelectedItem().toString())));
+        checkOut.setBook(bookDAO.findCategoryById(bookDAO.findCategoryByName(co_bookname.getSelectedItem().toString())));
+        checkOut.setStatus(Status.CHECK_OUT.toString());
+        rd_checkout.setSelected(true);
+        Instant instant = Instant.ofEpochMilli(cu_dae.getDate().getTime());
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        checkOut.setDateTime(localDateTime.toLocalDate());
+        operationsDAO.Checkout(checkOut);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
