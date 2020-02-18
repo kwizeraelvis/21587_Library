@@ -68,19 +68,9 @@ public class OperationsDAO extends Connector implements UserRepository<CheckIn, 
     @Override
     public void Checkout(CheckOut object) {
         connect();
-        if(object.getStatus().equals(Status.CHECK_IN.toString())){
-            try {
-                System.out.println(object.getStatus());
-                System.out.println("com.elvis.swingapp.librarysystem.DAO.OperationsDAO.Checkout()");
-                throw new BookCheckoutUnsupportedAction("The book is already taken");
-            } catch (BookCheckoutUnsupportedAction ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
-        }else{
+        if(!object.getStatus().equals(Status.CHECK_OUT.toString()) && object.getStatus().equals(Status.CHECK_IN.toString())){
             object.getBook().setStatus(Status.CHECK_OUT.toString());
             object.setStatus(object.getBook().getStatus());
-            System.out.println("Operation");
-            System.out.println(object.getStatus());
             try {
                 pst = con.prepareStatement("insert into operations values(?,?,?,?)");
                 pst.setString(1, object.getClient().getRegno());
@@ -92,6 +82,12 @@ public class OperationsDAO extends Connector implements UserRepository<CheckIn, 
                 e.printStackTrace();
             }finally{
                 disConnect();
+            }
+        }else{
+            try {
+                throw new BookCheckoutUnsupportedAction("The book is already taken");
+            } catch (BookCheckoutUnsupportedAction ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         }
     }

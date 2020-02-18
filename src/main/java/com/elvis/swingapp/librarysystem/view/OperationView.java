@@ -261,7 +261,6 @@ public class OperationView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_co_clientnameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
         CheckOut checkOut = new CheckOut();
         checkOut.setClient(clientDAO.findCategoryById(clientDAO.findCategoryByName(co_clientname.getSelectedItem().toString())));
         checkOut.setBook(bookDAO.findCategoryById(bookDAO.findCategoryByName(co_bookname.getSelectedItem().toString())));
@@ -271,9 +270,6 @@ public class OperationView extends javax.swing.JInternalFrame {
         checkOut.setDateTime(localDateTime.toLocalDate());
         operationsDAO.Checkout(checkOut);
         populateBookCheckoutTable();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
