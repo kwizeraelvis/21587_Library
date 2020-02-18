@@ -13,7 +13,7 @@ import java.sql.ResultSet;
  *
  * @author elvis
  */
-public class BookDAO extends Connector implements DAO<Book>,Repository<String, Book>{
+public class BookDAO extends Connector implements DAO<Book>,Repository<String, Book>,StandardRepository<Book, String>{
     BookCategoryDAO bookCategoryDAO = new BookCategoryDAO();
 
     public BookDAO() {
@@ -113,6 +113,16 @@ public class BookDAO extends Connector implements DAO<Book>,Repository<String, B
             disConnect();
         }
         return book;
+    }
+
+    @Override
+    public void update(Book object) {
+        //ToDo implement DAO standard Repository methods
+    }
+
+    @Override
+    public void delete(String objectID) {
+        //ToDo implement DAO standard Repository Methods.
     }
     
 }

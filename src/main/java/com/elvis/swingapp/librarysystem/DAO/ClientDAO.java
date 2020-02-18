@@ -16,7 +16,7 @@ import java.sql.SQLException;
  *
  * @author elvis
  */
-public class ClientDAO extends Connector implements DAO<Client>,Repository<String, Client> {
+public class ClientDAO extends Connector implements DAO<Client>,Repository<String, Client>,StandardRepository<Client, String> {
 
     public ClientDAO() {
         connect();
@@ -114,5 +114,15 @@ public class ClientDAO extends Connector implements DAO<Client>,Repository<Strin
             disConnect();
         }
         return client;
+    }
+
+    @Override
+    public void update(Client object) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+
+    @Override
+    public void delete(String objectID) {
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 }

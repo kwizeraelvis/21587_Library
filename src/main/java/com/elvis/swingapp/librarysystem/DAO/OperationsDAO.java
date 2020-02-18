@@ -13,6 +13,7 @@ import com.elvis.swingapp.librarysystem.utils.BookCheckoutUnsupportedAction;
 import com.elvis.swingapp.librarysystem.utils.Connector;
 import java.sql.Date;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -44,7 +45,7 @@ public class OperationsDAO extends Connector implements UserRepository<CheckIn, 
     @Override
     public void CheckIn(CheckIn object) {
         connect();
-        if(object.getStatus() != Status.CHECK_OUT.toString()){
+        if(object.getBook().getStatus() != Status.CHECK_OUT.toString()){
             try {
                 throw new BookCheckInUnsupportedAction("The book is already checked in");
             } catch (Exception e) {
@@ -67,19 +68,25 @@ public class OperationsDAO extends Connector implements UserRepository<CheckIn, 
     @Override
     public void Checkout(CheckOut object) {
         connect();
-        if(object.getStatus() != Status.CHECK_IN.toString()){
+        if(object.getStatus().equals(Status.CHECK_IN.toString())){
             try {
-                throw new BookCheckoutUnsupportedAction("The book has alrady been taken;");
+                System.out.println(object.getStatus());
+                System.out.println("com.elvis.swingapp.librarysystem.DAO.OperationsDAO.Checkout()");
+                throw new BookCheckoutUnsupportedAction("The book is already taken");
             } catch (BookCheckoutUnsupportedAction ex) {
-                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         }else{
+            object.getBook().setStatus(Status.CHECK_OUT.toString());
+            object.setStatus(object.getBook().getStatus());
+            System.out.println("Operation");
+            System.out.println(object.getStatus());
             try {
-                pst = con.prepareStatement("insrert into operation values(?,?,?,?)");
+                pst = con.prepareStatement("insert into operations values(?,?,?,?)");
                 pst.setString(1, object.getClient().getRegno());
                 pst.setString(2, object.getBook().getBookId());
                 pst.setDate(3, Date.valueOf(object.getDateTime()));
-                pst.setString(4, object.getStatus());
+                pst.setString(4, object.getBook().getStatus());
                 pst.executeUpdate();                
             } catch (Exception e) {
                 e.printStackTrace();
@@ -94,11 +101,23 @@ public class OperationsDAO extends Connector implements UserRepository<CheckIn, 
         connect();
         try {
             st = con.createStatement();
-            rs = st.executeQuery("select * from operation;");
+            rs = st.executeQuery("select * from operations;");
         } catch (Exception e) {
             e.printStackTrace();
         }
         return rs;
+    }
+    
+    public ResultSet displayOpertaionCategory(String category){
+        connect();
+        try{
+            pst = con.prepareStatement("select * from operations where status = ?");
+            pst.setString(1, category);
+            rs = pst.executeQuery();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+       return rs;
     }
 
 }

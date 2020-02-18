@@ -19,6 +19,7 @@ public class Book {
     private String author;
     private int pages;
     private BookCategory category;
+    private String status = Status.CHECK_IN.toString();
 
     public BookCategory getCategory() {
         return category;
@@ -75,4 +76,13 @@ public class Book {
     public void setPages(int pages) {
         this.pages = pages;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
 }
