@@ -77,7 +77,7 @@ public class ClientDAO extends Connector implements DAO<Client>,Repository<Strin
        String[] names = GeneralUtility.StringSplit(categoryName);
        String clientId = "";
         try {
-            pst = con.prepareStatement("select regno from client wheere firstname = ? and lastname = ?");
+            pst = con.prepareStatement("select regno from client where firstname = ? and lastname = ?");
             pst.setString(1, names[0]);
             pst.setString(2, names[1]);
             rs = pst.executeQuery();

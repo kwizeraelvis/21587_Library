@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -100,9 +101,11 @@ public class OperationView extends javax.swing.JInternalFrame {
 
         buttonGroup1.add(rd_checkin);
         rd_checkin.setText("CHECK_IN");
+        rd_checkin.setEnabled(false);
 
         buttonGroup1.add(rd_checkout);
         rd_checkout.setText("CHECK_OUT");
+        rd_checkout.setEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -238,6 +241,7 @@ public class OperationView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_co_clientnameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
         CheckOut checkOut = new CheckOut();
         checkOut.setClient(clientDAO.findCategoryById(clientDAO.findCategoryByName(co_clientname.getSelectedItem().toString())));
         checkOut.setBook(bookDAO.findCategoryById(bookDAO.findCategoryByName(co_bookname.getSelectedItem().toString())));
@@ -247,6 +251,9 @@ public class OperationView extends javax.swing.JInternalFrame {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
         checkOut.setDateTime(localDateTime.toLocalDate());
         operationsDAO.Checkout(checkOut);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
