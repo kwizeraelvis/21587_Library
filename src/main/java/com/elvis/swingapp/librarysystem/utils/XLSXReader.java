@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;

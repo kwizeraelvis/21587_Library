@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.elvis.swingapp.librarysystem.DAO;
 
 import com.elvis.swingapp.librarysystem.model.Client;
@@ -11,11 +6,6 @@ import com.elvis.swingapp.librarysystem.utils.GeneralUtility;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
-/**
- *
- * @author elvis
- */
 public class ClientDAO extends Connector implements DAO<Client>,Repository<String, Client>,StandardRepository<Client, String> {
 
     public ClientDAO() {

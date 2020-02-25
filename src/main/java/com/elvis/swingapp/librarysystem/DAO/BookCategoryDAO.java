@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.elvis.swingapp.librarysystem.DAO;
 
 import com.elvis.swingapp.librarysystem.model.BookCategory;
 import com.elvis.swingapp.librarysystem.utils.Connector;
 import java.sql.ResultSet;
 
-/**
- *
- * @author elvis
- */
 public class BookCategoryDAO extends Connector implements DAO<BookCategory>,Repository<String, BookCategory>{
 
     public BookCategoryDAO() {

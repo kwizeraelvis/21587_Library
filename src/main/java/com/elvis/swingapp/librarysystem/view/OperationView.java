@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.elvis.swingapp.librarysystem.view;
 
 import com.elvis.swingapp.librarysystem.DAO.BookDAO;
@@ -18,10 +13,6 @@ import java.time.ZoneId;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
-/**
- *
- * @author elvis
- */
 public class OperationView extends javax.swing.JInternalFrame {
     OperationsDAO operationsDAO = new OperationsDAO();
     BookDAO bookDAO = new BookDAO();
