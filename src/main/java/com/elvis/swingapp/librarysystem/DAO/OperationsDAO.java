@@ -45,17 +45,18 @@ public class OperationsDAO extends Connector implements UserRepository<CheckIn, 
     @Override
     public void CheckIn(CheckIn object) {
         connect();
-        if(object.getBook().getStatus() != Status.CHECK_OUT.toString()){
+        if(object.getBook().getStatus() == Status.CHECK_IN.toString()){
             try {
                 throw new BookCheckInUnsupportedAction("The book is already checked in");
             } catch (Exception e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, e.getMessage());
             }
         }else{
             try {
-                pst = con.prepareStatement("update operation set status = ? where clientID = ?;");
+                pst = con.prepareStatement("update operation set status = ? where clientID = ? and bookid = ?;");
                 pst.setString(1, object.getStatus());
                 pst.setString(2, object.getClient().getRegno());
+                pst.setString(3, object.getBook().getBookId());
                 pst.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();

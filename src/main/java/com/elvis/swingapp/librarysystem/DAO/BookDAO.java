@@ -8,6 +8,8 @@ package com.elvis.swingapp.librarysystem.DAO;
 import com.elvis.swingapp.librarysystem.model.Book;
 import com.elvis.swingapp.librarysystem.utils.Connector;
 import java.sql.ResultSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  *
@@ -115,6 +117,28 @@ public class BookDAO extends Connector implements DAO<Book>,Repository<String, B
         return book;
     }
 
+    public void saveBatch(Set<Book> books){
+        connect();
+        try {
+            pst = con.prepareStatement("insert into book values(?,?,?,?,?,?,?);");
+            for(Book book : books){
+                pst.setString(1, book.getBookId());
+                pst.setString(2, book.getTitle());
+                pst.setString(3, book.getPublishingHouse());
+                pst.setDate(4, book.getDateofPublication());
+                pst.setString(5, book.getAuthor());
+                pst.setInt(6, book.getPages());
+                pst.setString(7, book.getCategory().getCategoryId());
+                pst.addBatch();
+            }
+            pst.executeBatch();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            disConnect();
+        }
+    }
+    
     @Override
     public void update(Book object) {
         //ToDo implement DAO standard Repository methods

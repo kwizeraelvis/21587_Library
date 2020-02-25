@@ -26,7 +26,7 @@ public class Connector {
     protected Statement st;
     protected PreparedStatement pst;
     protected ResultSet rs;
-    
+     
     
     public void connect(){
         try{
@@ -35,6 +35,7 @@ public class Connector {
             e.printStackTrace();
         }
     }
+    
     public void disConnect(){
         try{
             if(con != null){
@@ -54,4 +55,7 @@ public class Connector {
         }
     }
     
+    public static Connector getInstance(){
+        return new Connector();
+    }
 }
