@@ -4,13 +4,9 @@ import com.elvis.swingapp.librarysystem.DAO.BookCategoryDAO;
 import com.elvis.swingapp.librarysystem.DAO.BookDAO;
 import com.elvis.swingapp.librarysystem.model.Book;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -22,11 +18,9 @@ public class XLSXReader{
     private static BookDAO bookDAO = new BookDAO();
     
     public static Set<Book> ReadXLSX(File file){
-        FileInputStream stream = null;
         Set<Book> books = new HashSet<>();
         try {
-            stream = new FileInputStream(file);
-            XSSFWorkbook workbook = new XSSFWorkbook(stream);
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheetAt(0);
             Row row;
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
@@ -58,12 +52,6 @@ public class XLSXReader{
             bookDAO.saveBatch(books);
         } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            try {
-                stream.close();
-            } catch (IOException ex) {
-                Logger.getLogger(XLSXReader.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return books;
     }
