@@ -1,6 +1,7 @@
 package com.elvis.swingapp.librarysystem.model;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class Book {
     private String bookId;
@@ -75,5 +76,31 @@ public class Book {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 47 * hash + Objects.hashCode(this.bookId);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Book other = (Book) obj;
+        if (!Objects.equals(this.bookId, other.bookId)) {
+            return false;
+        }
+        return true;
+    }
+    
     
 }
