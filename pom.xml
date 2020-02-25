@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.elvis.swingapp</groupId>
     <artifactId>LibrarySystem</artifactId>
-    <version>0.1</version>
+    <version>0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -52,6 +52,6 @@
     
     <scm>
         <developerConnection>scm:git:git@github.com:kwizeraelvis/java-library-system.git</developerConnection>
-        <tag>LibrarySystem-0.1</tag>
+        <tag>HEAD</tag>
     </scm>    
 </project>
