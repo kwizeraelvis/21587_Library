@@ -1,5 +1,6 @@
 package com.elvis.swingapp.librarysystem.model;
 
+import com.elvis.swingapp.librarysystem.utils.UpdatedClassFunctionality;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "checkout")
+@UpdatedClassFunctionality(since = "v3")
 public class CheckOut {
     @OneToOne
     @Column(name = "client")

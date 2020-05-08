@@ -1,5 +1,6 @@
 package com.elvis.swingapp.librarysystem.model;
 
+import com.elvis.swingapp.librarysystem.utils.UpdatedClassFunctionality;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "client")
+@UpdatedClassFunctionality(since = "v3")
 public class Client {
     @Id
     @Column(name = "regno")
