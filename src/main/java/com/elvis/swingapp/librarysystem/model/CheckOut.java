@@ -2,13 +2,31 @@ package com.elvis.swingapp.librarysystem.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "checkout")
 public class CheckOut {
+    @OneToOne
+    @Column(name = "client")
+    @JoinColumn(name = "regno")
     private Client client;
+    @OneToOne
+    @Column(name = "book")
+    @JoinColumn(name = "bookId")
     private Book book;
+    @Column(name = "date")
     private LocalDate dateTime;
+    @Column(name = "status")
     private String status;
-
+    @Id
+    private Long id;
+    
     public LocalDate getDateTime() {
         return dateTime;
     }
@@ -69,6 +87,5 @@ public class CheckOut {
         }
         return true;
     }
-    
-    
+
 }

@@ -1,10 +1,27 @@
 package com.elvis.swingapp.librarysystem.model;
 
+import com.elvis.swingapp.librarysystem.utils.UpdatedClassFunctionality;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
+@UpdatedClassFunctionality(since = "v3")
 public class BookCategory {
+    @Id
+    @Column(name = "categoryId")
     private String categoryId;
+    @Column(name = "categoryName")
     private String CategoryName;
+
+    public BookCategory() {
+    }
+
+    public BookCategory(String categoryId, String CategoryName) {
+        this.categoryId = categoryId;
+        this.CategoryName = CategoryName;
+    }
 
     public String getCategoryId() {
         return categoryId;

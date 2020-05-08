@@ -1,14 +1,39 @@
 package com.elvis.swingapp.librarysystem.model;
 
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "client")
 public class Client {
+    @Id
+    @Column(name = "regno")
     private String regno;
+    @Column(name = "firstName")
     private String firstName;
+    @Column(name = "lastName")
     private String lastName;
+    @Column(name = "phonenumber" )
     private String phoneNumber;
+    @Column(name = "email")
     private String email;
+    @Column(name = "category")
     private String category;
+
+    public Client() {
+    }
+
+    public Client(String regno, String firstName, String lastName, String phoneNumber, String email, String category) {
+        this.regno = regno;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.category = category;
+    }
 
     public String getRegno() {
         return regno;

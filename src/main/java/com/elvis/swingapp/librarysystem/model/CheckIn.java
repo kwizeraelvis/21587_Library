@@ -2,12 +2,41 @@ package com.elvis.swingapp.librarysystem.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-public class CheckIn {
+@Entity
+@Table(name = "checkIn")
+public class CheckIn{
+    @OneToOne
+    @Column(name = "client")
+    @JoinColumn(name = "regno")
     private Client client;
+    @OneToOne
+    @Column(name = "book")
+    @JoinColumn(name = "bookId")
     private Book book;
+    @Column(name = "date")
     private LocalDate dateTime;
+    @Column(name = "status")
     private String status;
+    @Id
+    private Long id;
+
+    public CheckIn() {
+    }
+
+    public CheckIn(Client client, Book book, LocalDate dateTime, String status, Long id) {
+        this.client = client;
+        this.book = book;
+        this.dateTime = dateTime;
+        this.status = status;
+        this.id = id;
+    }
 
     public LocalDate getDateTime() {
         return dateTime;
@@ -41,6 +70,7 @@ public class CheckIn {
         this.book = book;
     }
 
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -68,6 +98,14 @@ public class CheckIn {
             return false;
         }
         return true;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
     
     
