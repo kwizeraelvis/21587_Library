@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+@Deprecated
 public class Connector {
     
     private String DbUrl = "jdbc:postgresql://localhost:5432/library";
@@ -18,7 +19,7 @@ public class Connector {
     protected PreparedStatement pst;
     protected ResultSet rs;
      
-    
+    @Deprecated
     public void connect(){
         try{
             con = DriverManager.getConnection(DbUrl, DbUsername, DBPassword);
@@ -27,6 +28,7 @@ public class Connector {
         }
     }
     
+    @Deprecated
     public void disConnect(){
         try{
             if(con != null){
