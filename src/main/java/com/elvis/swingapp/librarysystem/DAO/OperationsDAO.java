@@ -9,9 +9,11 @@ import com.elvis.swingapp.librarysystem.utils.Connector;
 import java.sql.Date;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-@Deprecated
+
+@Deprecated(since = "v3", forRemoval = true)
 public class OperationsDAO extends Connector implements UserRepository<CheckIn, CheckOut>{
 
+    @Deprecated(since = "v3", forRemoval = true)
     public OperationsDAO() {
         connect();
         try {
@@ -33,6 +35,7 @@ public class OperationsDAO extends Connector implements UserRepository<CheckIn, 
         }
     }
     
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public void CheckIn(CheckIn object) {
         connect();
@@ -56,7 +59,8 @@ public class OperationsDAO extends Connector implements UserRepository<CheckIn, 
             }
         }
     }
-
+    
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public void Checkout(CheckOut object) {
         connect();
@@ -83,7 +87,8 @@ public class OperationsDAO extends Connector implements UserRepository<CheckIn, 
             }
         }
     }
-
+    
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public ResultSet display() {
         connect();
@@ -96,6 +101,7 @@ public class OperationsDAO extends Connector implements UserRepository<CheckIn, 
         return rs;
     }
     
+    @Deprecated(since = "v3", forRemoval = true)
     public ResultSet displayOpertaionCategory(String category){
         connect();
         try{

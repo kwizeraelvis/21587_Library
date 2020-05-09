@@ -8,6 +8,7 @@ import java.util.Set;
 public class BookDAO extends Connector implements DAO<Book>,Repository<String, Book>,StandardRepository<Book, String>{
     BookCategoryDAO bookCategoryDAO = new BookCategoryDAO();
 
+    @Deprecated(since = "v3", forRemoval = true)
     public BookDAO() {
         connect();
         try {
@@ -31,6 +32,7 @@ public class BookDAO extends Connector implements DAO<Book>,Repository<String, B
         }
     }
     
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public void save(Book object) {
          connect();
@@ -51,6 +53,7 @@ public class BookDAO extends Connector implements DAO<Book>,Repository<String, B
          }
     }
 
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public ResultSet display() {
         connect();
@@ -63,6 +66,7 @@ public class BookDAO extends Connector implements DAO<Book>,Repository<String, B
         return rs;
     }
 
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public String findCategoryByName(String categoryName) {
         connect();
@@ -81,7 +85,7 @@ public class BookDAO extends Connector implements DAO<Book>,Repository<String, B
         }
         return bookId;
     }
-
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public Book findCategoryById(String categoryId) {
         connect();
@@ -129,11 +133,13 @@ public class BookDAO extends Connector implements DAO<Book>,Repository<String, B
         }
     }
     
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public void update(Book object) {
         //ToDo implement DAO standard Repository methods
     }
 
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public void delete(String objectID) {
         //ToDo implement DAO standard Repository Methods.

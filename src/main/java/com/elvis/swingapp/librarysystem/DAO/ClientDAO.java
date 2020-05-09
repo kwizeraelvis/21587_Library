@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 public class ClientDAO extends Connector implements DAO<Client>,Repository<String, Client>,StandardRepository<Client, String> {
 
+    @Deprecated(since = "v3", forRemoval = true)
     public ClientDAO() {
         connect();
         try{
@@ -30,6 +31,7 @@ public class ClientDAO extends Connector implements DAO<Client>,Repository<Strin
     }
     
     
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public void save(Client object) {
         connect();
@@ -49,6 +51,7 @@ public class ClientDAO extends Connector implements DAO<Client>,Repository<Strin
         }
     }
 
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public ResultSet display() {
         connect();
@@ -61,6 +64,7 @@ public class ClientDAO extends Connector implements DAO<Client>,Repository<Strin
         return rs;
     }
 
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public String findCategoryByName(String categoryName) {
        connect();
@@ -81,7 +85,9 @@ public class ClientDAO extends Connector implements DAO<Client>,Repository<Strin
         }
         return clientId;
     }
+    
 
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public Client findCategoryById(String categoryId) {
         connect();
@@ -106,11 +112,13 @@ public class ClientDAO extends Connector implements DAO<Client>,Repository<Strin
         return client;
     }
 
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public void update(Client object) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
+    @Deprecated(since = "v3", forRemoval = true)
     @Override
     public void delete(String objectID) {
         throw new UnsupportedOperationException("Not supported yet."); 

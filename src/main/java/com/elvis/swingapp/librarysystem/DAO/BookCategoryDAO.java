@@ -4,8 +4,10 @@ import com.elvis.swingapp.librarysystem.model.BookCategory;
 import com.elvis.swingapp.librarysystem.utils.Connector;
 import java.sql.ResultSet;
 
+@Deprecated(since = "v3", forRemoval = true)
 public class BookCategoryDAO extends Connector implements DAO<BookCategory>,Repository<String, BookCategory>{
 
+    @Deprecated(since = "v3", forRemoval = true)
     public BookCategoryDAO() {
         connect();
         try {
