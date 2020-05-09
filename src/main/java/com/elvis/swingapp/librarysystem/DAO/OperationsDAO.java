@@ -9,7 +9,7 @@ import com.elvis.swingapp.librarysystem.utils.Connector;
 import java.sql.Date;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-
+@Deprecated
 public class OperationsDAO extends Connector implements UserRepository<CheckIn, CheckOut>{
 
     public OperationsDAO() {

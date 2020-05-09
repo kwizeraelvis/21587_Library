@@ -10,8 +10,12 @@
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/library</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">root</property>
-        
         <property name="hibernate.connection.pool_size">1</property>
         
+        <mapping class="com.elvis.swingapp.librarysystem.model.Client" />
+        <mapping class="com.elvis.swingapp.librarysystem.model.Book" />
+        <mapping class="com.elvis.swingapp.librarysystem.model.BookCategory" />
+        <mapping class="com.elvis.swingapp.librarysystem.model.CheckIn" />
+        <mapping class="com.elvis.swingapp.librarysystem.model.CheckOut" />
     </session-factory>
 </hibernate-configuration>  

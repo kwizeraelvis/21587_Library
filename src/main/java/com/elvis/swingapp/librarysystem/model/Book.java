@@ -3,19 +3,22 @@ package com.elvis.swingapp.librarysystem.model;
 import com.elvis.swingapp.librarysystem.utils.UpdatedClassFunctionality;
 import java.sql.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.OneToOne;
 
 @Entity
-@Table(name = "book")
 @UpdatedClassFunctionality(since = "v3")
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bookId")
-    private String bookId;
+    private Long bookId;
     @Column(name = "title")
     private String title;
     @Column(name = "publishingHouse")
@@ -26,8 +29,7 @@ public class Book {
     private String author;
     @Column(name = "pages")
     private int pages;
-    @ManyToOne
-    @Column(name = "category")
+    @OneToOne(targetEntity = BookCategory.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private BookCategory category;
     @Column(name = "status")
     private String status = Status.CHECK_IN.toString();
@@ -35,7 +37,7 @@ public class Book {
     public Book() {
     }
 
-    public Book(String bookId, String title, String publishingHouse, Date dateofPublication, String author, int pages, BookCategory category) {
+    public Book(Long bookId, String title, String publishingHouse, Date dateofPublication, String author, int pages, BookCategory category) {
         this.bookId = bookId;
         this.title = title;
         this.publishingHouse = publishingHouse;
@@ -53,11 +55,11 @@ public class Book {
         this.category = category;
     }
 
-    public String getBookId() {
+    public Long getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(Long bookId) {
         this.bookId = bookId;
     }
 

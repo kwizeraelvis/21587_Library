@@ -5,31 +5,29 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "category")
 @UpdatedClassFunctionality(since = "v3")
 public class BookCategory {
     @Id
     @Column(name = "categoryId")
-    private String categoryId;
+    private Long categoryId;
     @Column(name = "categoryName")
     private String CategoryName;
 
     public BookCategory() {
     }
 
-    public BookCategory(String categoryId, String CategoryName) {
+    public BookCategory(Long categoryId, String CategoryName) {
         this.categoryId = categoryId;
         this.CategoryName = CategoryName;
     }
 
-    public String getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 

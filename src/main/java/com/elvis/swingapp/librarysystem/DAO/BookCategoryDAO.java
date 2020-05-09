@@ -28,7 +28,7 @@ public class BookCategoryDAO extends Connector implements DAO<BookCategory>,Repo
         connect();
         try {
             pst = con.prepareStatement("insert into category values(?,?)");
-            pst.setString(1, object.getCategoryId());
+            pst.setString(1, "");
             pst.setString(2, object.getCategoryName());
             pst.executeUpdate();
         } catch (Exception e) {
@@ -78,7 +78,7 @@ public class BookCategoryDAO extends Connector implements DAO<BookCategory>,Repo
             pst.setString(1, categoryId);
             rs = pst.executeQuery();
             if(rs.next()){
-                category.setCategoryId(rs.getString("categoryID"));
+                category.setCategoryId(1l);
                 category.setCategoryName(rs.getString("categoryName"));
             }
         } catch (Exception e) {

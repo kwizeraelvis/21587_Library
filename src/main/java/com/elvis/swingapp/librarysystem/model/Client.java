@@ -4,16 +4,17 @@ import com.elvis.swingapp.librarysystem.utils.UpdatedClassFunctionality;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "client")
 @UpdatedClassFunctionality(since = "v3")
 public class Client {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "regno")
-    private String regno;
+    private Long regno;
     @Column(name = "firstName")
     private String firstName;
     @Column(name = "lastName")
@@ -28,7 +29,7 @@ public class Client {
     public Client() {
     }
 
-    public Client(String regno, String firstName, String lastName, String phoneNumber, String email, String category) {
+    public Client(Long regno, String firstName, String lastName, String phoneNumber, String email, String category) {
         this.regno = regno;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,11 +38,11 @@ public class Client {
         this.category = category;
     }
 
-    public String getRegno() {
+    public Long getRegno() {
         return regno;
     }
 
-    public void setRegno(String regno) {
+    public void setRegno(Long regno) {
         this.regno = regno;
     }
 

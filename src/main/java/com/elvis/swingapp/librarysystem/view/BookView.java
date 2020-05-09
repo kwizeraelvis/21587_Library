@@ -4,12 +4,12 @@ import com.elvis.swingapp.librarysystem.DAO.BookCategoryDAO;
 import com.elvis.swingapp.librarysystem.DAO.BookDAO;
 import com.elvis.swingapp.librarysystem.model.Book;
 import com.elvis.swingapp.librarysystem.model.BookCategory;
+import com.elvis.swingapp.librarysystem.utils.XLSXReader;
 import java.io.File;
 import java.sql.Date;
 import java.sql.ResultSet;
 import javax.swing.JFileChooser;
 import net.proteanit.sql.DbUtils;
-import com.elvis.swingapp.librarysystem.utils.XLSXReader;
 
 public class BookView extends javax.swing.JInternalFrame {
     BookDAO bookDAO = new BookDAO();
@@ -432,7 +432,7 @@ public class BookView extends javax.swing.JInternalFrame {
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Book book = new Book();
-        book.setBookId(txt_bid.getText());
+        book.setBookId(1l);
         book.setTitle(txt_title.getText());
         book.setPublishingHouse(txt_house.getText());
         book.setDateofPublication(new Date(txt_date.getDate().getTime()));
@@ -445,7 +445,7 @@ public class BookView extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         BookCategory bookCategory = new BookCategory();
-        bookCategory.setCategoryId(txt_categoryid.getText());
+//        bookCategory.setCategoryId(txt_categoryid.getText());
         bookCategory.setCategoryName(txt_categoryName.getText());
         bookCategoryDAO.save(bookCategory);
         RenderBookCategoryTable();

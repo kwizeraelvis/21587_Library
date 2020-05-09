@@ -27,7 +27,7 @@ public class XLSXReader{
                 row = (Row) sheet.getRow(i);
                 Book book = new Book();
                 if(row.getCell(0) == null){book.setBookId(null);}
-                else book.setBookId(row.getCell(0).getStringCellValue());
+                else book.setBookId(1l);
                 
                 if(row.getCell(1) == null){book.setTitle(null);}
                 else book.setTitle(row.getCell(1).getStringCellValue());

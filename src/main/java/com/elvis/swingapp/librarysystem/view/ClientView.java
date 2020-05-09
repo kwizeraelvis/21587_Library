@@ -1,19 +1,25 @@
 package com.elvis.swingapp.librarysystem.view;
 
-import com.elvis.swingapp.librarysystem.DAO.ClientDAO;
+import com.elvis.swingapp.librarysystem.controller.ClientController;
 import com.elvis.swingapp.librarysystem.model.Client;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.ListIterator;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import net.proteanit.sql.DbUtils;
+import javax.swing.table.DefaultTableModel;
 
 public class ClientView extends javax.swing.JInternalFrame {
 
-    ClientDAO clientDAO = new ClientDAO();
+//    @Deprecated(since = "V3", forRemoval = true)
+//    ClientDAO clientDAO = new ClientDAO();
+    
+    ClientController clientController = new ClientController();
     /**
      * Creates new form ClientView
      */
@@ -264,20 +270,44 @@ public class ClientView extends javax.swing.JInternalFrame {
 
     
     public void RenderTable(){
-        tb_info.setModel(DbUtils.resultSetToTableModel(clientDAO.display()));
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        String[] columnIdentifier = {
+            "regno",
+            "FirstName",
+            "LastName",
+            "PhoneNumber",
+            "Email",
+            "Category"
+        };
+        List<Client> clients = Collections.synchronizedList(clientController.listAllClients());
+        defaultTableModel.setColumnIdentifiers(columnIdentifier);
+        
+        ListIterator<Client> iterator = clients.listIterator();
+        while(iterator.hasNext()){
+            Client client = iterator.next();
+            Object[] row = new Object[6];
+            row[0] = client.getRegno();
+            row[1] = client.getFirstName();
+            row[2] = client.getLastName();
+            row[3] = client.getPhoneNumber();
+            row[4] = client.getEmail();
+            row[5] = client.getCategory();
+            defaultTableModel.addRow(row);
+        }
+        tb_info.setModel(defaultTableModel);
     }
     
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Client client = new Client();
-        client.setRegno(txt_regno.getText());
+        client.setRegno(1l);
         client.setFirstName(txt_firstname.getText());
         client.setLastName(txt_lastname.getText());
         client.setPhoneNumber(txt_phone.getText());
         client.setEmail(txt_email.getText());
         client.setCategory(co_category.getSelectedItem().toString());
-        clientDAO.save(client);
+        clientController.saveClient(client);
         RenderTable();
     }//GEN-LAST:event_jButton1ActionPerformed
 

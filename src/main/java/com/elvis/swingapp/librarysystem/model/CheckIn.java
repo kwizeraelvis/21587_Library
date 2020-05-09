@@ -3,30 +3,28 @@ package com.elvis.swingapp.librarysystem.model;
 import com.elvis.swingapp.librarysystem.utils.UpdatedClassFunctionality;
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "checkIn")
 @UpdatedClassFunctionality(since = "v3")
 public class CheckIn{
-    @OneToOne
-    @Column(name = "client")
-    @JoinColumn(name = "regno")
+    @OneToOne(targetEntity = Client.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Client client;
-    @OneToOne
-    @Column(name = "book")
-    @JoinColumn(name = "bookId")
+    @OneToOne(targetEntity = Book.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Book book;
     @Column(name = "date")
     private LocalDate dateTime;
     @Column(name = "status")
     private String status;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public CheckIn() {
