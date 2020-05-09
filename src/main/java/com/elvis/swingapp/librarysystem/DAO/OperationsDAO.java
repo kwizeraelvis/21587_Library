@@ -46,8 +46,8 @@ public class OperationsDAO extends Connector implements UserRepository<CheckIn, 
             try {
                 pst = con.prepareStatement("update operation set status = ? where clientID = ? and bookid = ?;");
                 pst.setString(1, object.getStatus());
-                pst.setString(2, object.getClient().getRegno());
-                pst.setString(3, object.getBook().getBookId());
+                pst.setString(2, "");
+                pst.setString(3, "");
                 pst.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -65,8 +65,8 @@ public class OperationsDAO extends Connector implements UserRepository<CheckIn, 
             object.setStatus(object.getBook().getStatus());
             try {
                 pst = con.prepareStatement("insert into operations values(?,?,?,?)");
-                pst.setString(1, object.getClient().getRegno());
-                pst.setString(2, object.getBook().getBookId());
+                pst.setString(1, "");
+                pst.setString(2, "");
                 pst.setDate(3, Date.valueOf(object.getDateTime()));
                 pst.setString(4, object.getBook().getStatus());
                 pst.executeUpdate();                

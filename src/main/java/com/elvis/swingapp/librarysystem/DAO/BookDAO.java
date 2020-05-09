@@ -36,13 +36,13 @@ public class BookDAO extends Connector implements DAO<Book>,Repository<String, B
          connect();
          try {
             pst = con.prepareStatement("insert into book values(?,?,?,?,?,?,?);");
-            pst.setString(1, object.getBookId());
+            pst.setString(1, "");
             pst.setString(2, object.getTitle());
             pst.setString(3, object.getPublishingHouse());
             pst.setDate(4, object.getDateofPublication());
             pst.setString(5, object.getAuthor());
             pst.setInt(6, object.getPages());
-            pst.setString(7, object.getCategory().getCategoryId());
+            pst.setString(7, "");
             pst.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,7 +91,7 @@ public class BookDAO extends Connector implements DAO<Book>,Repository<String, B
             pst.setString(1, categoryId);
             rs = pst.executeQuery();
             if(rs.next()){
-                book.setBookId(categoryId);
+                book.setBookId(1L);
                 book.setTitle(rs.getString("title"));
                 book.setAuthor(rs.getString("author"));
                 book.setPublishingHouse(rs.getString("publishingHouse"));
@@ -112,13 +112,13 @@ public class BookDAO extends Connector implements DAO<Book>,Repository<String, B
         try {
             pst = con.prepareStatement("insert into book values(?,?,?,?,?,?,?);");
             for(Book book : books){
-                pst.setString(1, book.getBookId());
+                pst.setString(1, "");
                 pst.setString(2, book.getTitle());
                 pst.setString(3, book.getPublishingHouse());
                 pst.setDate(4, book.getDateofPublication());
                 pst.setString(5, book.getAuthor());
                 pst.setInt(6, book.getPages());
-                pst.setString(7, book.getCategory().getCategoryId());
+                pst.setString(7, "");
                 pst.addBatch();
             }
             pst.executeBatch();

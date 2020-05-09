@@ -35,7 +35,7 @@ public class ClientDAO extends Connector implements DAO<Client>,Repository<Strin
         connect();
         try{
             pst = con.prepareStatement("insert into client values(?,?,?,?,?,?)");
-            pst.setString(1, object.getRegno());
+            pst.setString(1, "");
             pst.setString(2, object.getFirstName());
             pst.setString(3, object.getLastName());
             pst.setString(4, object.getPhoneNumber());
@@ -91,7 +91,7 @@ public class ClientDAO extends Connector implements DAO<Client>,Repository<Strin
             pst.setString(1, categoryId);
             rs = pst.executeQuery();
             if(rs.next()){
-                client.setRegno(categoryId);
+                client.setRegno(1L);
                 client.setFirstName(rs.getString("firstname"));
                 client.setLastName(rs.getString("lastname"));
                 client.setEmail(rs.getString("email"));
