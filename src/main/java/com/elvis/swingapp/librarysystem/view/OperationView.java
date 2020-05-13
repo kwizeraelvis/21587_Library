@@ -1,22 +1,25 @@
 package com.elvis.swingapp.librarysystem.view;
 
-import com.elvis.swingapp.librarysystem.DAO.BookDAO;
-import com.elvis.swingapp.librarysystem.DAO.ClientDAO;
-import com.elvis.swingapp.librarysystem.DAO.OperationsDAO;
+import com.elvis.swingapp.librarysystem.controller.BookController;
+import com.elvis.swingapp.librarysystem.controller.ClientController;
+import com.elvis.swingapp.librarysystem.controller.OperationsController;
+import com.elvis.swingapp.librarysystem.model.Book;
 import com.elvis.swingapp.librarysystem.model.CheckIn;
 import com.elvis.swingapp.librarysystem.model.CheckOut;
-import com.elvis.swingapp.librarysystem.model.Status;
-import java.sql.ResultSet;
+import com.elvis.swingapp.librarysystem.model.Client;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ListIterator;
 import javax.swing.JOptionPane;
-import net.proteanit.sql.DbUtils;
+import javax.swing.table.DefaultTableModel;
 
 public class OperationView extends javax.swing.JInternalFrame {
-    OperationsDAO operationsDAO = new OperationsDAO();
-    BookDAO bookDAO = new BookDAO();
-    ClientDAO clientDAO = new ClientDAO();
+
+    OperationsController operationsController = new OperationsController();
+    BookController bookController = new BookController();
+    ClientController clientController = new ClientController();
+
     /**
      * Creates new form OperationView
      */
@@ -29,62 +32,97 @@ public class OperationView extends javax.swing.JInternalFrame {
         PopulateClientNameOptionIn();
         PopulateBookNameOptionIn();
     }
-    private void PopulateClientNameOption(){
+
+    private void PopulateClientNameOption() {
         co_clientname.removeAllItems();
-        try{
-            ResultSet options = clientDAO.display();
-            while(options.next()){
-                StringBuilder builder = new StringBuilder(100);
-                co_clientname.addItem(builder.append(options.getString("firstname")).append(" ").append(options.getString("lastname")).toString());
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+        ListIterator<Client> iterator = clientController
+                .listAllClients().listIterator();
+        while (iterator.hasNext()) {
+            Client client = iterator.next();
+            co_clientname.addItem(new StringBuilder()
+                    .append(client.getFirstName())
+                    .append(" ")
+                    .append(client.getLastName())
+                    .toString());
         }
     }
-    private void PopulateClientNameOptionIn(){
-        co_clientname.removeAllItems();
-        try{
-            ResultSet options = clientDAO.display();
-            while(options.next()){
-                StringBuilder builder = new StringBuilder(100);
-                co_clientname1.addItem(builder.append(options.getString("firstname")).append(" ").append(options.getString("lastname")).toString());
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+
+    private void PopulateClientNameOptionIn() {
+        co_clientname1.removeAllItems();
+        ListIterator<Client> iterator = clientController
+                .listAllClients().listIterator();
+        while (iterator.hasNext()) {
+            Client client = iterator.next();
+            co_clientname1.addItem(new StringBuilder()
+                    .append(client.getFirstName())
+                    .append(" ")
+                    .append(client.getLastName())
+                    .toString());
         }
     }
-    private void PopulateBookNameOption(){
+
+    private void PopulateBookNameOption() {
         co_bookname.removeAllItems();
-        try {
-            ResultSet options = bookDAO.display();
-            while(options.next()){
-                co_bookname.addItem(options.getString("title"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        ListIterator<Book> iterator = bookController
+                .listAllBooks().listIterator();
+        while (iterator.hasNext()) {
+            co_bookname.addItem(iterator.next().getTitle());
         }
-        
+
     }
-    
-    private void PopulateBookNameOptionIn(){
-        co_bookname.removeAllItems();
-        try {
-            ResultSet options = bookDAO.display();
-            while(options.next()){
-                co_bookname1.addItem(options.getString("title"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+
+    private void PopulateBookNameOptionIn() {
+        co_bookname1.removeAllItems();
+        ListIterator<Book> iterator = bookController
+                .listAllBooks().listIterator();
+        while (iterator.hasNext()) {
+            co_bookname1.addItem(iterator.next().getTitle());
         }
-        
+
     }
-    
-    private void populateBookCheckoutTable(){
-        tb_chkout.setModel(DbUtils.resultSetToTableModel(operationsDAO.displayOpertaionCategory(Status.CHECK_OUT.toString())));
+
+    private void populateBookCheckoutTable() {
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        String[] columnIdentifier = {
+            "Client",
+            "Book",
+            "Date"
+        };
+        defaultTableModel.setColumnIdentifiers(columnIdentifier);
+        ListIterator<CheckOut> iterator = operationsController
+                .listAlCheckOuts().listIterator();
+        while (iterator.hasNext()) {
+            CheckOut checkOut = iterator.next();
+            Object[] row = new Object[columnIdentifier.length];
+            row[0] = checkOut.getClient().getFirstName();
+            row[1] = checkOut.getBook().getTitle();
+            row[2] = checkOut.getDateTime();
+            defaultTableModel.addRow(row);
+        }
+        tb_chkout.setModel(defaultTableModel);
     }
-    private void populateBookCheckInTable(){
-        tb_chkout1.setModel(DbUtils.resultSetToTableModel(operationsDAO.displayOpertaionCategory(Status.CHECK_IN.toString())));
+
+    private void populateBookCheckInTable() {
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        String[] columnIdentifier = {
+            "Client",
+            "Book",
+            "Date"
+        };
+        defaultTableModel.setColumnIdentifiers(columnIdentifier);
+        ListIterator<CheckIn> iterator = operationsController
+                .listAllCheckIns().listIterator();
+        while (iterator.hasNext()) {
+            CheckIn checkIn = iterator.next();
+            Object[] row = new Object[columnIdentifier.length];
+            row[0] = checkIn.getClient().getFirstName();
+            row[1] = checkIn.getBook().getTitle();
+            row[2] = checkIn.getDateTime();
+            defaultTableModel.addRow(row);
+        }
+        tb_chkout1.setModel(defaultTableModel);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -422,26 +460,32 @@ public class OperationView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_co_clientnameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        CheckOut checkOut = new CheckOut();
-        checkOut.setClient(clientDAO.findCategoryById(clientDAO.findCategoryByName(co_clientname.getSelectedItem().toString())));
-        checkOut.setBook(bookDAO.findCategoryById(bookDAO.findCategoryByName(co_bookname.getSelectedItem().toString())));
-        checkOut.setStatus(bookDAO.findCategoryById(bookDAO.findCategoryByName(co_bookname.getSelectedItem().toString())).getStatus());
-        Instant instant = Instant.ofEpochMilli(cu_dae.getDate().getTime());
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-        checkOut.setDateTime(localDateTime.toLocalDate());
-        operationsDAO.Checkout(checkOut);
-        populateBookCheckoutTable();
+        try {
+            CheckOut checkOut = new CheckOut();
+            checkOut.setClient(clientController.findClientByNames(co_clientname.getSelectedItem().toString()));
+            checkOut.setBook(bookController.findBookByTitle(co_bookname.getSelectedItem().toString()));
+            checkOut.setStatus(bookController.findBookByTitle(co_bookname.getSelectedItem().toString()).getStatus());
+            Instant instant = Instant.ofEpochMilli(cu_dae.getDate().getTime());
+            LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+            checkOut.setDateTime(localDateTime.toLocalDate());
+            operationsController.CheckOut(checkOut);
+            populateBookCheckoutTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CheckIn checkIn = new CheckIn();
-        checkIn.setClient(clientDAO.findCategoryById(clientDAO.findCategoryByName(co_clientname1.getSelectedItem().toString())));
-        checkIn.setBook(bookDAO.findCategoryById(bookDAO.findCategoryByName(co_bookname1.getSelectedItem().toString())));
-        checkIn.setStatus(bookDAO.findCategoryById(bookDAO.findCategoryByName(co_bookname1.getSelectedItem().toString())).getStatus());
+        checkIn.setClient(clientController.findClientByNames(co_clientname1.getSelectedItem().toString()));
+        checkIn.setBook(bookController.findBookByTitle(co_bookname1.getSelectedItem().toString()));
+        checkIn.setStatus(bookController.findBookByTitle(co_bookname1.getSelectedItem().toString()).getStatus());
         Instant instant = Instant.ofEpochMilli(cu_dae1.getDate().getTime());
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
         checkIn.setDateTime(localDateTime.toLocalDate());
-        operationsDAO.CheckIn(checkIn);
+        operationsController.CheckIn(checkIn);
         populateBookCheckInTable();
     }//GEN-LAST:event_jButton2ActionPerformed
 
