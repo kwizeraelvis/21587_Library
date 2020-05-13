@@ -4,7 +4,6 @@ import com.elvis.swingapp.librarysystem.controller.BookCategoryController;
 import com.elvis.swingapp.librarysystem.controller.BookController;
 import com.elvis.swingapp.librarysystem.model.Book;
 import com.elvis.swingapp.librarysystem.model.BookCategory;
-import com.elvis.swingapp.librarysystem.utils.XLSXReader;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.sql.Date;
@@ -14,10 +13,6 @@ import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 
 public class BookView extends javax.swing.JInternalFrame {
-//    BookDAO bookDAO = new BookDAO();
-//    BookCategoryDAO bookCategoryDAO = new BookCategoryDAO();
-    
-    
     BookCategoryController bookCategoryController = new BookCategoryController();
     BookController bookController = new BookController();
     /**
@@ -499,7 +494,6 @@ public class BookView extends javax.swing.JInternalFrame {
         int userAction = chooser.showOpenDialog(this);
         if(userAction == JFileChooser.APPROVE_OPTION){
             File file = chooser.getSelectedFile();
-            XLSXReader.ReadXLSX(file);
         }
         RenderBookTable();
     }//GEN-LAST:event_jButton3ActionPerformed
