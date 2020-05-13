@@ -2,23 +2,17 @@ package com.elvis.swingapp.librarysystem.view;
 
 import com.elvis.swingapp.librarysystem.controller.ClientController;
 import com.elvis.swingapp.librarysystem.model.Client;
+import com.elvis.swingapp.librarysystem.view.utils.TableRenderer;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.table.DefaultTableModel;
 
-public class ClientView extends javax.swing.JInternalFrame {
-
-//    @Deprecated(since = "V3", forRemoval = true)
-//    ClientDAO clientDAO = new ClientDAO();
-    
+public class ClientView extends javax.swing.JInternalFrame {   
     ClientController clientController = new ClientController();
     /**
      * Creates new form ClientView
@@ -270,31 +264,35 @@ public class ClientView extends javax.swing.JInternalFrame {
 
     
     public void RenderTable(){
-        DefaultTableModel defaultTableModel = new DefaultTableModel();
-        String[] columnIdentifier = {
-            "regno",
-            "FirstName",
-            "LastName",
-            "PhoneNumber",
-            "Email",
-            "Category"
-        };
-        List<Client> clients = Collections.synchronizedList(clientController.listAllClients());
-        defaultTableModel.setColumnIdentifiers(columnIdentifier);
-        
-        ListIterator<Client> iterator = clients.listIterator();
-        while(iterator.hasNext()){
-            Client client = iterator.next();
-            Object[] row = new Object[6];
-            row[0] = client.getRegno();
-            row[1] = client.getFirstName();
-            row[2] = client.getLastName();
-            row[3] = client.getPhoneNumber();
-            row[4] = client.getEmail();
-            row[5] = client.getCategory();
-            defaultTableModel.addRow(row);
-        }
-        tb_info.setModel(defaultTableModel);
+//        DefaultTableModel defaultTableModel = new DefaultTableModel();
+//        String[] columnIdentifier = {
+//            "regno",
+//            "FirstName",
+//            "LastName",
+//            "PhoneNumber",
+//            "Email",
+//            "Category"
+//        };
+//        List<Client> clients = Collections.synchronizedList(clientController.listAllClients());
+//        defaultTableModel.setColumnIdentifiers(columnIdentifier);
+//        
+//        ListIterator<Client> iterator = clients.listIterator();
+//        while(iterator.hasNext()){
+//            Client client = iterator.next();
+//            Object[] row = new Object[6];
+//            row[0] = client.getRegno();
+//            row[1] = client.getFirstName();
+//            row[2] = client.getLastName();
+//            row[3] = client.getPhoneNumber();
+//            row[4] = client.getEmail();
+//            row[5] = client.getCategory();
+//            defaultTableModel.addRow(row);
+//        }
+//        tb_info.setModel(defaultTableModel);
+
+            List<Client> clients = clientController.listAllClients();
+            TableRenderer<Client> tableRenderer = new TableRenderer<>(Client.class);
+            tableRenderer.renderTable(clients, tb_info);
     }
     
     
