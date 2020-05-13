@@ -2,6 +2,7 @@ package com.elvis.swingapp.librarysystem.controller;
 
 import com.elvis.swingapp.librarysystem.model.Client;
 import com.elvis.swingapp.librarysystem.utils.FactoryIntializer;
+import com.elvis.swingapp.librarysystem.utils.GeneralUtility;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -10,10 +11,12 @@ import javax.persistence.criteria.Root;
 import org.hibernate.HibernateError;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 public class ClientController {
+    private static Session session;
     public void saveClient(Client client){
-        Session session = FactoryIntializer.intializSessionFactory().openSession();
+        session = FactoryIntializer.intializSessionFactory().openSession();
         Transaction transaction = null;
         try{
             transaction = session.beginTransaction();
@@ -27,7 +30,7 @@ public class ClientController {
         }
     }
     public Client findClient(String SearchParameter, Object paramater){
-        Session session = FactoryIntializer.intializSessionFactory().openSession();
+        session = FactoryIntializer.intializSessionFactory().openSession();
         Transaction transaction = null;
         Client client = null;
         try {
@@ -47,7 +50,7 @@ public class ClientController {
         return client;
     }
     public void updateclient(Long id, Client UpdateData){
-        Session session = FactoryIntializer.intializSessionFactory().openSession();
+        session = FactoryIntializer.intializSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
@@ -67,7 +70,7 @@ public class ClientController {
         }
     }
     public void deleteClient(Long clientId){
-        Session session = FactoryIntializer.intializSessionFactory().openSession();
+        session = FactoryIntializer.intializSessionFactory().openSession();
         Transaction transaction = null;
         try{
             transaction = session.beginTransaction();
@@ -82,7 +85,7 @@ public class ClientController {
         }
     }
     public List<Client> listAllClients(){
-        Session session = FactoryIntializer.intializSessionFactory().openSession();
+        session = FactoryIntializer.intializSessionFactory().openSession();
         Transaction transaction = null;
         List<Client> clients = new ArrayList<>();
         try {
@@ -98,4 +101,25 @@ public class ClientController {
         return  clients;
     }
     
+    public Client findClientByNames(String Name){
+        String[] clientNames = GeneralUtility.StringSplit(Name);
+        session = FactoryIntializer.intializSessionFactory().openSession();
+        Transaction transaction = null;
+        Client client = null;
+        try {
+            transaction = session.beginTransaction();
+            String query = "From Client as c where c.firstName= :firstname and c.lastName= :lastname";
+            Query q = session.createQuery(query);
+            q.setParameter("firstname", clientNames[0]);
+            q.setParameter("lastname", clientNames[1]);
+            client = (Client) q.getSingleResult();
+            transaction.commit();
+        } catch (HibernateError e) {
+            if(transaction != null)transaction.rollback();
+            e.printStackTrace();
+        }finally{
+            session.close();
+        }
+        return client;
+    }
 }
