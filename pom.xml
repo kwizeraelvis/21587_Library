@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.elvis.swingapp</groupId>
     <artifactId>LibrarySystem</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.3</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -71,6 +71,11 @@
             <artifactId>javax.persistence</artifactId>
             <version>2.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -87,6 +92,6 @@
     
     <scm>
         <developerConnection>scm:git:git@github.com:kwizeraelvis/java-library-system.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>LibrarySystem-0.3</tag>
     </scm>    
 </project>
