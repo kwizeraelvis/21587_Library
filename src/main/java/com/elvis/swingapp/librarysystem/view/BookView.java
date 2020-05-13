@@ -1,19 +1,25 @@
 package com.elvis.swingapp.librarysystem.view;
 
-import com.elvis.swingapp.librarysystem.DAO.BookCategoryDAO;
-import com.elvis.swingapp.librarysystem.DAO.BookDAO;
+import com.elvis.swingapp.librarysystem.controller.BookCategoryController;
+import com.elvis.swingapp.librarysystem.controller.BookController;
 import com.elvis.swingapp.librarysystem.model.Book;
 import com.elvis.swingapp.librarysystem.model.BookCategory;
 import com.elvis.swingapp.librarysystem.utils.XLSXReader;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.sql.Date;
-import java.sql.ResultSet;
+import java.util.List;
+import java.util.ListIterator;
 import javax.swing.JFileChooser;
-import net.proteanit.sql.DbUtils;
+import javax.swing.table.DefaultTableModel;
 
 public class BookView extends javax.swing.JInternalFrame {
-    BookDAO bookDAO = new BookDAO();
-    BookCategoryDAO bookCategoryDAO = new BookCategoryDAO();
+//    BookDAO bookDAO = new BookDAO();
+//    BookCategoryDAO bookCategoryDAO = new BookCategoryDAO();
+    
+    
+    BookCategoryController bookCategoryController = new BookCategoryController();
+    BookController bookController = new BookController();
     /**
      * Creates new form BookView
      */
@@ -412,42 +418,78 @@ public class BookView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void RenderBookTable(){
-        jTable1.setModel(DbUtils.resultSetToTableModel(bookDAO.display()));
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        Field[] fields = Book.class.getDeclaredFields();
+        String[] columnIdentifers = new String[fields.length];
+        for(int i = 0; i < fields.length; i++){
+            columnIdentifers[i] = fields[i].getName();
+            System.out.println("Column Identifier: " + columnIdentifers[i]);
+        }
+        defaultTableModel.setColumnIdentifiers(columnIdentifers);
+        ListIterator<Book> iterator = bookController
+                .listAllBooks().listIterator();
+        while(iterator.hasNext()){
+            Book book = iterator.next();
+            Object[] row = new Object[fields.length];
+            row[0] = book.getBookId();
+            row[1] = book.getTitle();
+            row[2] = book.getPublishingHouse();
+            row[3] = book.getDateofPublication();
+            row[4] = book.getAuthor();
+            row[5] = book.getPages();
+            row[6] = book.getCategory().getCategoryName();
+            row[7] = book.getStatus();
+            defaultTableModel.addRow(row);
+        }
+        jTable1.setModel(defaultTableModel);
     }
     
     private void RenderBookCategoryTable(){
-        jTable2.setModel(DbUtils.resultSetToTableModel(bookCategoryDAO.display()));
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        String[] columnIdentifiers = {
+            "categoryId",
+            "categoryName"
+        };
+        defaultTableModel.setColumnIdentifiers(columnIdentifiers);
+        List<BookCategory> categorys = bookCategoryController.listAllCategories();
+        ListIterator<BookCategory> iterator = categorys.listIterator();
+        while(iterator.hasNext()){
+            BookCategory category = iterator.next();
+            Object[] row = new Object[2];
+            row[0] = category.getCategoryId();
+            row[1] = category.getCategoryName();
+            defaultTableModel.addRow(row);
+        }
+        jTable2.setModel(defaultTableModel);
     }
     private void PopulateCategoryOptions(){
         co_category.removeAllItems();
-        try {
-            ResultSet options = bookCategoryDAO.display();
-            while(options.next()){
-                co_category.addItem(options.getString("categoryName"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        List<BookCategory> categorys = bookCategoryController.listAllCategories();
+        ListIterator<BookCategory> iterator = categorys.listIterator();
+        while(iterator.hasNext()){
+            co_category.addItem(iterator.next().getCategoryName());
         }
     }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Book book = new Book();
-        book.setBookId(1l);
+        book.setBookId(Long.parseLong(txt_bid.getText()));
         book.setTitle(txt_title.getText());
         book.setPublishingHouse(txt_house.getText());
         book.setDateofPublication(new Date(txt_date.getDate().getTime()));
         book.setAuthor(txt_author.getText());
         book.setPages(Integer.valueOf(cu_pages.getValue().toString()));
-        book.setCategory(bookCategoryDAO.findCategoryById(bookCategoryDAO.findCategoryByName(co_category.getSelectedItem().toString())));
-        bookDAO.save(book);
+        book.setCategory(bookCategoryController
+                .findCategoryByName(co_category.getSelectedItem().toString()));
+        bookController.saveBook(book);
         RenderBookTable();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         BookCategory bookCategory = new BookCategory();
-//        bookCategory.setCategoryId(txt_categoryid.getText());
+        bookCategory.setCategoryId(Long.parseLong(txt_categoryid.getText()));
         bookCategory.setCategoryName(txt_categoryName.getText());
-        bookCategoryDAO.save(bookCategory);
+        bookCategoryController.saveCategory(bookCategory);
         RenderBookCategoryTable();
         PopulateCategoryOptions();
     }//GEN-LAST:event_jButton2ActionPerformed
