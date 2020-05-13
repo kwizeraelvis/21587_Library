@@ -1,11 +1,13 @@
 package com.elvis.swingapp.librarysystem;
 
-import com.elvis.swingapp.librarysystem.view.MainView;
+import com.elvis.swingapp.librarysystem.view.LoginView;
 
 public class Apllication {
    
     public static void main(String[] args) throws IllegalAccessException {
-        MainView mainView = new MainView();
-        mainView.setVisible(true);
+        LoginView loginView = new LoginView();
+        loginView.setVisible(true);
+
+        
     }
 }

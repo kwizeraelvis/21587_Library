@@ -17,5 +17,6 @@
         <mapping class="com.elvis.swingapp.librarysystem.model.BookCategory" />
         <mapping class="com.elvis.swingapp.librarysystem.model.CheckIn" />
         <mapping class="com.elvis.swingapp.librarysystem.model.CheckOut" />
+        <mapping class="com.elvis.swingapp.librarysystem.model.AuthUser" />
     </session-factory>
 </hibernate-configuration>  
