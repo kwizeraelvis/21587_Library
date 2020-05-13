@@ -13,14 +13,14 @@ public class BookCategory {
     @Column(name = "categoryId")
     private Long categoryId;
     @Column(name = "categoryName")
-    private String CategoryName;
+    private String categoryName;
 
     public BookCategory() {
     }
 
-    public BookCategory(Long categoryId, String CategoryName) {
+    public BookCategory(Long categoryId, String categoryName) {
         this.categoryId = categoryId;
-        this.CategoryName = CategoryName;
+        this.categoryName = categoryName;
     }
 
     public Long getCategoryId() {
@@ -32,11 +32,11 @@ public class BookCategory {
     }
 
     public String getCategoryName() {
-        return CategoryName;
+        return categoryName;
     }
 
-    public void setCategoryName(String CategoryName) {
-        this.CategoryName = CategoryName;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     @Override
